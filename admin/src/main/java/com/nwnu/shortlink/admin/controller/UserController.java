@@ -1,6 +1,7 @@
 package com.nwnu.shortlink.admin.controller;
 
 import com.nwnu.shortlink.admin.common.convention.result.Result;
+import com.nwnu.shortlink.admin.common.convention.result.Results;
 import com.nwnu.shortlink.admin.common.enums.UserErrorCode;
 import com.nwnu.shortlink.admin.dto.resp.UserRespDTO;
 import com.nwnu.shortlink.admin.service.UserService;
@@ -23,11 +24,6 @@ public class UserController {
 
     @GetMapping("/api/shortlink/v1/user/{username}")
     public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username){
-        UserRespDTO result = userService.getUserByUsername(username);
-        if (result == null){
-            return new Result<UserRespDTO>().setCode(UserErrorCode.USER_NULL_CODE.code()).setMessage(UserErrorCode.USER_NULL_CODE.message());
-        }else {
-            return new Result<UserRespDTO>().setCode("0").setData(userService.getUserByUsername(username));
-        }
+        return Results.success(userService.getUserByUsername(username));
     }
 }
