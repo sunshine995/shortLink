@@ -7,6 +7,12 @@
     <groupId>org.saas</groupId>
     <artifactId>shortSaas</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>admin</module>
+        <module>project</module>
+        <module>gateway</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <properties>
         <java.version>17</java.version>
@@ -17,12 +23,19 @@
         <shardingsphere.version>5.3.1</shardingsphere.version>
         <jjwt.version>0.9.1</jjwt.version>
         <fastjson2.version>2.0.21</fastjson2.version>
-        <mybatis-plus.version>3.5.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
         <dozer-core.version>6.5.2</dozer-core.version>
         <hutool-all.version>5.8.10</hutool-all.version>
         <redisson.version>3.21.3</redisson.version>
         <guava.version>30.0-jre</guava.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
