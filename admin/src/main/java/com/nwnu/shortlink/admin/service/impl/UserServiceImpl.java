@@ -14,11 +14,14 @@ import com.nwnu.shortlink.admin.dto.resp.UserRespDTO;
 import com.nwnu.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RBloomFilter;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import static com.nwnu.shortlink.admin.common.enums.UserErrorCode.USER_NAME_EXIST_CODE;
-import static com.nwnu.shortlink.admin.common.enums.UserErrorCode.USER_SAVE_CODE;
+import static com.nwnu.shortlink.admin.common.constant.RedisCacheConstant.LOCK_USER_REGISTER_KEY;
+import static com.nwnu.shortlink.admin.common.enums.UserErrorCode.*;
 
 /**
  * 用户接口实现层
@@ -28,6 +31,7 @@ import static com.nwnu.shortlink.admin.common.enums.UserErrorCode.USER_SAVE_CODE
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements UserService {
 
     private final RBloomFilter<String> userRegisterCachePenetrationBloomFilter;
+    private final RedissonClient redissonClient;
 
 
 
@@ -59,10 +63,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
         if (!hasUsername(requestParam.getUsername())){
             throw new ClientException(USER_NAME_EXIST_CODE);
         }
-        int insert = baseMapper.insert(BeanUtil.copyProperties(requestParam, UserDo.class));
-        if (insert < 1){
-            throw new ClientException(USER_SAVE_CODE);
+        // 对当前用户名加锁
+        RLock lock = redissonClient.getLock(LOCK_USER_REGISTER_KEY + requestParam.getUsername());
+
+        try {
+            if (lock.tryLock()) {
+                try {
+                    int insert = baseMapper.insert(BeanUtil.copyProperties(requestParam, UserDo.class));
+                    if (insert < 1){
+                        throw new ClientException(USER_SAVE_CODE);
+                    }
+                } catch (DuplicateKeyException e){
+                    throw new ClientException(USER_EXIST_CODE);
+                }
+                userRegisterCachePenetrationBloomFilter.add(requestParam.getUsername());
+                return;
+            }
+            throw new ClientException(USER_NAME_EXIST_CODE);
+        }finally {
+            lock.unlock();
         }
-        userRegisterCachePenetrationBloomFilter.add(requestParam.getUsername());
+
     }
 }

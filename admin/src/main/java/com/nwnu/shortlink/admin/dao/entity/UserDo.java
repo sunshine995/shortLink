@@ -3,7 +3,6 @@ package com.nwnu.shortlink.admin.dao.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
