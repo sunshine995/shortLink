@@ -2,7 +2,10 @@ package com.nwnu.shortlink.admin.controller;
 
 import com.nwnu.shortlink.admin.common.convention.result.Result;
 import com.nwnu.shortlink.admin.common.convention.result.Results;
+import com.nwnu.shortlink.admin.dto.req.UserLoginReqDto;
 import com.nwnu.shortlink.admin.dto.req.UserRegisterReqDto;
+import com.nwnu.shortlink.admin.dto.req.UserUpdateReqDto;
+import com.nwnu.shortlink.admin.dto.resp.UserLoginRespDto;
 import com.nwnu.shortlink.admin.dto.resp.UserRespDTO;
 import com.nwnu.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +48,18 @@ public class UserController {
     public Result<Void> saveUser(@RequestBody UserRegisterReqDto userRegisterReqDto){
         userService.register(userRegisterReqDto);
         return Results.success();
+    }
+
+    @PutMapping("/api/short-link/v1/user")
+    public Result<Void> updateUser(@RequestBody UserUpdateReqDto userUpdateReqDto){
+        userService.updateUser(userUpdateReqDto);
+        return Results.success();
+    }
+
+
+    @PostMapping("/api/short-link/v1/user/login")
+    public Result<UserLoginRespDto> login(@RequestBody UserLoginReqDto userLoginReqDto){
+        UserLoginRespDto userLoginRespDto =   userService.login(userLoginReqDto);
+        return Results.success(userLoginRespDto);
     }
 }
