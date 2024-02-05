@@ -2,6 +2,7 @@ package com.nwnu.shortlink.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.nwnu.shortlink.admin.dao.entity.GroupDo;
+import com.nwnu.shortlink.admin.dto.req.ShortLinkGroupUpdateReqDto;
 import com.nwnu.shortlink.admin.dto.resp.ShortLinkGroupRespDto;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +22,10 @@ public interface GroupService extends IService<GroupDo> {
     void saveGroup(String groupName);
 
     List<ShortLinkGroupRespDto> listGroup();
+
+    /**
+     * 更新分组
+     * @param shortLinkGroupUpdateReqDto
+     */
+    void updateGroup(ShortLinkGroupUpdateReqDto shortLinkGroupUpdateReqDto);
 }
