@@ -23,7 +23,7 @@ public class UserController {
     // @Autowired
     private final UserService userService;
 
-    @GetMapping("/api/short-link/v1/user/{username}")
+    @GetMapping("/api/short-link/admin/v1/user/{username}")
     public Result<UserRespDTO> getUserByUsername(@PathVariable("username") String username){
         return Results.success(userService.getUserByUsername(username));
     }
@@ -33,7 +33,7 @@ public class UserController {
      * @param username
      * @return
      */
-    @GetMapping("/api/short-link/v1/user/has-username")
+    @GetMapping("/api/short-link/admin/v1/user/has-username")
     public Result<Boolean> hasUsername(@RequestParam("username") String username){
         return Results.success(userService.hasUsername(username));
     }
@@ -44,20 +44,20 @@ public class UserController {
      * @return
      */
 
-    @PostMapping("/api/short-link/v1/user")
+    @PostMapping("/api/short-link/admin/v1/user")
     public Result<Void> saveUser(@RequestBody UserRegisterReqDto userRegisterReqDto){
         userService.register(userRegisterReqDto);
         return Results.success();
     }
 
-    @PutMapping("/api/short-link/v1/user")
+    @PutMapping("/api/short-link/admin/v1/user")
     public Result<Void> updateUser(@RequestBody UserUpdateReqDto userUpdateReqDto){
         userService.updateUser(userUpdateReqDto);
         return Results.success();
     }
 
 
-    @PostMapping("/api/short-link/v1/user/login")
+    @PostMapping("/api/short-link/admin/v1/user/login")
     public Result<UserLoginRespDto> login(@RequestBody UserLoginReqDto userLoginReqDto){
         UserLoginRespDto userLoginRespDto =   userService.login(userLoginReqDto);
         return Results.success(userLoginRespDto);
