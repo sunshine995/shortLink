@@ -68,18 +68,4 @@ public class ShortLinkDo {
     @TableField("`describe`")
     private String describe;
 
-    /**
-     * 创建时间
-     */
-    private Date creatTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    /**
-     * 删除标识0：未删除，1删除
-     */
-    private int delFlag;
 }
