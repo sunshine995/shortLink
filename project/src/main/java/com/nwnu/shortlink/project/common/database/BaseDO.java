@@ -13,7 +13,7 @@ public class BaseDO {
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    private Date creatTime;
 
     /**
      * 修改时间

@@ -2,7 +2,8 @@ package com.nwnu.shortlin;
 
 public class UserTableTest {
 
-    public static final String SQl = "CREATE TABLE `t_link_%d`  (\n" +
+    public static final String SQl = "DROP TABLE IF EXISTS `t_link_%d`;\n" +
+            "CREATE TABLE `t_link_%d`  (\n" +
             "  `id` bigint NOT NULL COMMENT 'ID',\n" +
             "  `domain` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '域名',\n" +
             "  `short_url` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '短链接',\n" +
@@ -18,13 +19,14 @@ public class UserTableTest {
             "  `creat_time` datetime NULL DEFAULT NULL COMMENT '创建时间',\n" +
             "  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',\n" +
             "  `del_flag` tinyint NULL DEFAULT NULL COMMENT '删除标识0：未删除，1删除',\n" +
+            "  `favicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '图片连接',\n" +
             "  PRIMARY KEY (`id`) USING BTREE,\n" +
             "  UNIQUE INDEX `id_unique_full_shortlink`(`full_short_url` ASC) USING BTREE COMMENT '全部短链接唯一索引'\n" +
-            ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;\n";
+            ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;\n";
 
     public static void main(String[] args) {
         for (int i = 0; i < 16; i++) {
-            System.out.println(String.format(SQl, i));
+            System.out.println(String.format(SQl, i,i));
         }
     }
 }
