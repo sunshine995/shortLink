@@ -1,13 +1,14 @@
 package com.nwnu.shortlink.admin.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.nwnu.shortlink.admin.common.database.BaseDO;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
 @TableName("t_user")
-public class UserDo {
+public class UserDo extends BaseDO {
 
 
         /**

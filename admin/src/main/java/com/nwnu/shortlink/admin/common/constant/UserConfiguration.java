@@ -1,7 +1,6 @@
 package com.nwnu.shortlink.admin.common.constant;
 
 import com.nwnu.shortlink.admin.common.biz.user.UserTransmitFilter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 /**
  * 用户配置自动装配
  */
-@Configuration
+//@Configuration
 public class UserConfiguration {
 
     /**

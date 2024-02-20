@@ -1,6 +1,7 @@
 package com.nwnu.shortlink.admin.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.nwnu.shortlink.admin.common.database.BaseDO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupDo {
+public class GroupDo extends BaseDO {
     /**
      * id
      */
@@ -56,5 +57,5 @@ public class GroupDo {
     /**
      * 删除标识 0：未删除 1：已删除
      */
-    private int delFlag;
+    private Integer delFlag;
 }

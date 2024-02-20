@@ -15,6 +15,7 @@ import com.nwnu.shortlink.admin.dto.req.UserRegisterReqDto;
 import com.nwnu.shortlink.admin.dto.req.UserUpdateReqDto;
 import com.nwnu.shortlink.admin.dto.resp.UserLoginRespDto;
 import com.nwnu.shortlink.admin.dto.resp.UserRespDTO;
+import com.nwnu.shortlink.admin.service.GroupService;
 import com.nwnu.shortlink.admin.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RBloomFilter;
@@ -44,6 +45,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
     private final RedissonClient redissonClient;
     // 将登录信息存储在redis中
     private final StringRedisTemplate stringRedisTemplate;
+    private final GroupService groupService;
+
 
 
 
@@ -89,6 +92,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserDo> implements 
                     throw new ClientException(USER_EXIST_CODE);
                 }
                 userRegisterCachePenetrationBloomFilter.add(requestParam.getUsername());
+                groupService.saveGroup("默认分组");
                 return;
             }
             throw new ClientException(USER_NAME_EXIST_CODE);
