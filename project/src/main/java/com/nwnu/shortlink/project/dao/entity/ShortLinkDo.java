@@ -43,12 +43,12 @@ public class ShortLinkDo extends BaseDO {
     /**
      * 启用标识0：启用，1未启用
      */
-    private int enableStatus;
+    private Integer enableStatus;
 
     /**
      * 创建类型0：控制台，1接口创建
      */
-    private int createType;
+    private Integer createType;
 
     // 分组表示
     private String gid;
@@ -56,7 +56,7 @@ public class ShortLinkDo extends BaseDO {
     /**
      * 有效类型0：永久有效，1自定义
      */
-    private int validDateType;
+    private Integer validDateType;
 
     /**
      * 有效期
