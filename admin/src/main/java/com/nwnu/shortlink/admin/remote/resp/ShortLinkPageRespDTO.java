@@ -1,4 +1,4 @@
-package com.nwnu.shortlink.admin.remote.dto.resp;
+package com.nwnu.shortlink.admin.remote.resp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.nwnu.shortlink.admin.remote.dto.req;
+package com.nwnu.shortlink.admin.remote.req;
 
 import lombok.Data;
 
