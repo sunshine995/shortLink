@@ -35,20 +35,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDo> implemen
 
     @Override
     public void saveGroup(String groupName) {
-        String gid;
-        do {
-            gid = RandomGenerator.generateRandom();
-        }while (!hasGid(gid));
-
-
-        GroupDo build = GroupDo.builder()
-                .gid(gid)
-                .sortOrder(0)
-                .username("mall")
-                .name(groupName)
-                .build();
-        baseMapper.insert(build);
-
+        saveGroup(UserContext.getUsername(), groupName);
     }
 
     @Override
@@ -96,13 +83,29 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, GroupDo> implemen
         baseMapper.update(groupDo, wrapper);
     }
 
+    @Override
+    public void saveGroup(String username, String groupName) {
+        String gid;
+        do {
+            gid = RandomGenerator.generateRandom();
+        }while (!hasGid(username, gid));
 
 
-    private boolean hasGid(String gid){
+        GroupDo build = GroupDo.builder()
+                .gid(gid)
+                .sortOrder(0)
+                .username(username)
+                .name(groupName)
+                .build();
+        baseMapper.insert(build);
+    }
+
+
+    private boolean hasGid(String username, String gid){
         LambdaQueryWrapper<GroupDo> wrapper = Wrappers.lambdaQuery(GroupDo.class).
                 eq(GroupDo::getGid, gid)
                 // TODO 设置用户名
-                .eq(GroupDo::getUsername, "mall");
+                .eq(GroupDo::getUsername, Optional.ofNullable(username).orElse(UserContext.getUsername()));
         System.out.println(UserContext.getUsername());
         GroupDo groupDo = baseMapper.selectOne(wrapper);
         return groupDo == null;
