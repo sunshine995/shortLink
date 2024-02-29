@@ -2,15 +2,14 @@ package com.nwnu.shortlink.admin.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.nwnu.shortlink.admin.common.convention.result.Result;
+import com.nwnu.shortlink.admin.common.convention.result.Results;
 import com.nwnu.shortlink.admin.remote.ShortLinkRemote;
 import com.nwnu.shortlink.admin.remote.req.ShortLinkCreateReqDto;
 import com.nwnu.shortlink.admin.remote.req.ShortLinkPageReqDTO;
+import com.nwnu.shortlink.admin.remote.req.ShortLinkUpdateReqDTO;
 import com.nwnu.shortlink.admin.remote.resp.ShortLinkCreateRespDto;
 import com.nwnu.shortlink.admin.remote.resp.ShortLinkPageRespDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ShortLinkController {
@@ -35,5 +34,14 @@ public class ShortLinkController {
     @GetMapping("/api/short-link/admin/v1/page")
     public Result<IPage<ShortLinkPageRespDTO>> pageShortLink(ShortLinkPageReqDTO requestParam) {
         return shortLinkRemoteService.pageShortLink(requestParam);
+    }
+
+    /**
+     * 修改短链接
+     */
+    @PostMapping("/api/short-link/admin/v1/update")
+    public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
+        shortLinkRemoteService.updateShortLink(requestParam);
+        return Results.success();
     }
 }

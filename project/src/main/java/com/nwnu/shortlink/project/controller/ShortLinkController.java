@@ -43,7 +43,13 @@ public class ShortLinkController {
         return Results.success(shortLinkService.listGroupShortLinkCount(requestParam));
     }
 
-    @PutMapping("/api/short-link/v1/update")
+    /**
+     * 修改短链接
+     * @param requestParam 参数
+     * @return 返回值
+     */
+
+    @PostMapping("/api/short-link/v1/update")
     public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
         shortLinkService.updateShortLink(requestParam);
         return Results.success();
