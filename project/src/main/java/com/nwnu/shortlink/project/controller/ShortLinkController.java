@@ -5,6 +5,7 @@ import com.nwnu.shortlink.project.common.convention.result.Result;
 import com.nwnu.shortlink.project.common.convention.result.Results;
 import com.nwnu.shortlink.project.dto.req.ShortLinkCreateReqDto;
 import com.nwnu.shortlink.project.dto.req.ShortLinkPageReqDTO;
+import com.nwnu.shortlink.project.dto.req.ShortLinkUpdateReqDTO;
 import com.nwnu.shortlink.project.dto.resp.ShortLinkCreateRespDto;
 import com.nwnu.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import com.nwnu.shortlink.project.dto.resp.ShortLinkPageRespDTO;
@@ -41,4 +42,11 @@ public class ShortLinkController {
     public Result<List<ShortLinkGroupCountQueryRespDTO>> listGroupShortLinkCount(@RequestParam("requestParam") List<String> requestParam) {
         return Results.success(shortLinkService.listGroupShortLinkCount(requestParam));
     }
+
+    @PutMapping("/api/short-link/v1/update")
+    public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
+        shortLinkService.updateShortLink(requestParam);
+        return Results.success();
+    }
+
 }
