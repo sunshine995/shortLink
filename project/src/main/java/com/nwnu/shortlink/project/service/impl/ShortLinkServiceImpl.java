@@ -23,6 +23,7 @@ import com.nwnu.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import com.nwnu.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import com.nwnu.shortlink.project.service.ShortLinkService;
 import com.nwnu.shortlink.project.toolkit.HashUtil;
+import com.nwnu.shortlink.project.toolkit.LinkUtil;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -78,6 +79,11 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
             log.warn("短链接：{} 重复入库", fullUrl);
             throw new ServiceException("短链接生成重复");
         }
+        stringRedisTemplate.opsForValue().set(
+                fullUrl,
+                shortLinkCreateReqDto.getOrigin(),
+                LinkUtil.getLinkCacheValidTime(shortLinkCreateReqDto.getValidDate()), TimeUnit.MILLISECONDS
+        );
         // 将短链接的值插入布隆过滤器
         shortLinkCreatCachePenetrationBloomFilter.add(fullUrl);
         return ShortLinkCreateRespDto.builder()
