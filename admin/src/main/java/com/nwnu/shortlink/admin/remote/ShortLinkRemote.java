@@ -7,10 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.nwnu.shortlink.admin.common.convention.result.Result;
 import com.nwnu.shortlink.admin.dto.req.RecycleBinSaveReqDTO;
 import com.nwnu.shortlink.admin.dto.resp.ShortLinkGroupCountQueryRespDTO;
-import com.nwnu.shortlink.admin.remote.req.ShortLinkCreateReqDto;
-import com.nwnu.shortlink.admin.remote.req.ShortLinkPageReqDTO;
-import com.nwnu.shortlink.admin.remote.req.ShortLinkRecycleBinPageReqDTO;
-import com.nwnu.shortlink.admin.remote.req.ShortLinkUpdateReqDTO;
+import com.nwnu.shortlink.admin.remote.req.*;
 import com.nwnu.shortlink.admin.remote.resp.ShortLinkCreateRespDto;
 import com.nwnu.shortlink.admin.remote.resp.ShortLinkPageRespDTO;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,5 +98,14 @@ public interface ShortLinkRemote {
         String resultPageStr = HttpUtil.get("http://127.0.0.1:8001/api/short-link/v1/recycle-bin/page", requestMap);
         return JSON.parseObject(resultPageStr, new TypeReference<>() {
         });
+    }
+
+    /**
+     * 恢复短链接
+     *
+     * @param requestParam 短链接恢复请求参数
+     */
+    default void recoverRecycleBin(RecycleBinRecoverReqDTO requestParam) {
+        HttpUtil.post("http://127.0.0.1:8001/api/short-link/v1/recycle-bin/recover", JSON.toJSONString(requestParam));
     }
 }
