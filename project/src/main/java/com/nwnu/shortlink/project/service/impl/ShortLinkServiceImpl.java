@@ -90,6 +90,7 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
         shortLinkDo.setTotalPv(0);
         shortLinkDo.setTotalUip(0);
         shortLinkDo.setTotalUv(0);
+        shortLinkDo.setEnableStatus(0);
         System.out.println(shortLinkDo.getDescribe());
         shortLinkDo.setFullShortUrl(shortLinkCreateReqDto.getDomain() + "/" + shortUrl);
 
@@ -390,6 +391,7 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                         .fullShortUrl(fullShortUrl)
                         .build();
                 linkAccessLogsMapper.insert(linkAccessLogsDO);
+                baseMapper.incrementStats(gid, fullShortUrl, 1, uvFirstFlag.get() ? 1 : 0, uipFirstFlag ? 1 : 0);
             }
 
         } catch (Throwable ex) {
